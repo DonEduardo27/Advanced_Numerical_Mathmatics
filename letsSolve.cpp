@@ -35,34 +35,29 @@ Matrix thomas(Matrix mat, Matrix vec)
 		Matrix m(0,0);
 		return m;		
 	}
-
 	//Actual algorithm
-
-	//The c_i's
-	double newc1 = mat.getElement(1,2) / mat.getElement(1,2);
-	mat.setElement(1,2,newc1);
-	for (int i = 2; i <= mat.getDimensionM(); ++i)
+	//(1)
+	Matrix alpha(vec.getDimensionN()+1,1);
+	Matrix beta (vec.getDimensionN()+1,1);
+	alpha.setElement(1,1,0);
+	beta.setElement(1,1,0);
+	//(2)
+	for (int i = 1; i <= vec.getDimensionN(); ++i)
 	{
-		double newci = (mat.getElement(i,i+1)/*ci*/) / ( mat.getElement(i,i)/*bi*/ - mat.getElement(i-1,i)/*ci'-1*/ * mat.getElement(i,i-1)  );
-		mat.setElement(i,i+1, newci);
+		double alphajplus1 = ((-1) * mat.getElement(i,i+1)) /
+												(mat.getElement(i,i) + alpha.getElement(i,1) * mat.getElement(i,i-1)); 
+		double betajplus1  = (vec.getElement(i,1) - beta.getElement(i,1) * mat.getElement(i,i-1)) /
+												(mat.getElement(i,i) + alpha.getElement(i,1) * mat.getElement(i,i-1));
+		alpha.setElement(i+1,1,alphajplus1);
+		 beta.setElement(i+1,1,betajplus1);
 	}
-	//The d_i's
-	double newd1 = vec.getElement(1,1) / mat.getElement(1,2);
-	vec.setElement(1,1,newd1);
-	for (int i = 2; i <= vec.getDimensionN(); ++i)
+	//(3)
+	Matrix solVec (vec.getDimensionN(),1);
+	solVec.setElement(vec.getDimensionN(),1, beta.getElement(vec.getDimensionN()+1,1));
+	//(4)
+	for (int i = vec.getDimensionN() - 1; i > 0; i--)
 	{
-		double newdi = ( vec.getElement(1,i)/*di*/ - vec.getElement(1,i-1)/*di-1*/  *  mat.getElement(i,i-1)/*ai*/ ) /
-									 ( mat.getElement(i,i)/*bi*/ - mat.getElement(i-1,i)/*c'i*/   *  mat.getElement(i,i-1)/*ai*/ );
-		vec.setElement(1,i, newdi);
-	}
-
-	Matrix solVec(1, mat.getDimensionN());
-	solVec.setElement(1,solVec.getDimensionM(), vec.getElement(1,vec.getDimensionM()));
-
-	for (int i = mat.getDimensionN() - 1; i > 0; --i)
-	{
-		double newxi = vec.getElement(1,i) - mat.getElement(i-1,i) * solVec.getElement(1,i+1);
-		solVec.setElement(1,i,newxi);
+		solVec.setElement(i,1, alpha.getElement(i+1,1) * solVec.getElement(i+1,1) + beta.getElement(i+1,1));
 	}
 	return solVec;
 
@@ -72,6 +67,20 @@ Matrix thomas(Matrix mat, Matrix vec)
 int main()
 {
 	std::cout<<"Wie zur Hoelle ging C++ nochmal? \n";
+	Matrix m(4,4);
+	m.makeBand3(1,2,1);
+	m.printMat();
+
+	Matrix v(4,1);
+	v.setElement(1,1,8);
+	v.setElement(2,1,12);
+	v.setElement(3,1,17);
+	v.setElement(4,1,20);
+	v.printMat();
+
+	thomas(m,v).printMat();		
+
+	/*
 	Matrix m(5,5);
 	m.printMat();
 	
@@ -88,10 +97,21 @@ int main()
 
 	UserInput u;
 
+	Matrix v(5,1);
+	v.setElement(1,1,1);
+	v.setElement(2,1,2);
+	v.setElement(3,1,3);
+	v.setElement(4,1,4);
+	v.setElement(5,1,5);
+	v.printMat();
+
+	Matrix sol(5,1);
+	sol = thomas(m,v);
+	sol.printMat();
 	//u.userDialog_init();
 	//std::cout<<"g: "<<u.calculate_g()<<"f: "<<u.calculate_f()<<std::endl;
 
-
+*/
 
 
 	std::cout<<std::endl;

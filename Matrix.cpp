@@ -41,6 +41,8 @@ void Matrix::printMat()
 		for (int j = 0; j < dimM; ++j)
 		{
 			str << val[i][j] ;	
+
+			str<< "--";
 		}
 		str<<"\n";
 	}
