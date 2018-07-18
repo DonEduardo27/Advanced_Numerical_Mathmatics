@@ -1,5 +1,11 @@
 #include "UserInput.hpp"
 #include <iostream>
+
+UserInput::UserInput()
+{
+	userDialog_init();
+}
+
 void UserInput::userDialog_init()
 {
 	std::cout<<"Initializing Values. \nValue a of heat equation: ";
@@ -32,5 +38,10 @@ double UserInput::calculate_f()
 double UserInput::calculate_g()
 {
 	return -((a_heat*a_heat) / (h_step*h_step));
+}
+Matrix UserInput::calculate_rhs()
+{
+	Matrix i(0,0);
+	return i;
 }
 //~UserInput();

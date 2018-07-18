@@ -1,13 +1,16 @@
+#include "Matrix.hpp"
+
 class UserInput
 {
 public:
-	//UserInput()
+	UserInput();
 
 	void userDialog_init();
 
 	double calculate_f();
 	double calculate_g();
 	//~UserInput();
+	Matrix calculate_rhs();
 private:
 double a_heat;
 

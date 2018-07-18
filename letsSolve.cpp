@@ -66,9 +66,14 @@ Matrix thomas(Matrix mat, Matrix vec)
 
 int main()
 {
-	std::cout<<"Wie zur Hoelle ging C++ nochmal? \n";
+	std::cout<<"Matrix Solver \n";
+	UserInput UInp;
+
+	double f = UInp.calculate_f();
+	double g = UInp.calculate_g();
+
 	Matrix m(4,4);
-	m.makeBand3(1,2,1);
+	m.makeBand3(g,f,g);
 	m.printMat();
 
 	Matrix v(4,1);
@@ -80,38 +85,7 @@ int main()
 
 	thomas(m,v).printMat();		
 
-	/*
-	Matrix m(5,5);
-	m.printMat();
-	
-	m.setElement(1,1,9);
-	m.printMat();
 
-	m.setElement(5,5,8);
-	m.printMat();
-
-	std::cout<<std::endl;
-
-	m.makeBand3(1,2,3);
-	m.printMat();
-
-	UserInput u;
-
-	Matrix v(5,1);
-	v.setElement(1,1,1);
-	v.setElement(2,1,2);
-	v.setElement(3,1,3);
-	v.setElement(4,1,4);
-	v.setElement(5,1,5);
-	v.printMat();
-
-	Matrix sol(5,1);
-	sol = thomas(m,v);
-	sol.printMat();
-	//u.userDialog_init();
-	//std::cout<<"g: "<<u.calculate_g()<<"f: "<<u.calculate_f()<<std::endl;
-
-*/
 
 
 	std::cout<<std::endl;
