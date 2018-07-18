@@ -11,6 +11,7 @@ public:
 	double calculate_g();
 	//~UserInput();
 	Matrix calculate_rhs();
+	Matrix make_matrix();
 private:
 double a_heat;
 

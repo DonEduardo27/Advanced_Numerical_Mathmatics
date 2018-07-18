@@ -1,5 +1,6 @@
 #include "UserInput.hpp"
 #include <iostream>
+#include <math.h>
 
 UserInput::UserInput()
 {
@@ -33,15 +34,39 @@ void UserInput::userDialog_init()
 
 double UserInput::calculate_f()
 {
-	return (1 / Tau_step) + ((2*a_heat*a_heat)/h_step*h_step);
+	return (1 / Tau_step) +/*war mal +*/ ((2*a_heat*a_heat)/h_step*h_step);
 }
 double UserInput::calculate_g()
 {
-	return -((a_heat*a_heat) / (h_step*h_step));
+	return -((a_heat*a_heat) / (h_step*h_step));/*war mal -*/
 }
 Matrix UserInput::calculate_rhs()
 {
-	Matrix i(0,0);
-	return i;
+	Matrix rhs(n_steps-2,1);//1, 2, 3, ..., n-2, x
+
+	for (int i = 1; i < n_steps-2; ++i)
+	{
+		rhs.setElement(i,1, (1/Tau_step)  * ( ((float)i * A_bound)/((float)(n_steps-1)) ) );
+	}
+	double specialvalue = (1/Tau_step)  *  (((n_steps-2)*A_bound)  /  (n_steps-1));
+			specialvalue = specialvalue - calculate_g() * A_bound * cos(omega_bound * Tau_step);
+ 	rhs.setElement(n_steps-2,1,   specialvalue);
+
+	return rhs;
+}
+Matrix UserInput::make_matrix()
+{   
+	if(n_steps > 2)
+	{
+		Matrix mat(n_steps-2,n_steps-2);
+		mat.makeBand3(calculate_g(),calculate_f(),calculate_g());
+		return mat;
+	}
+	else 
+	{
+		Matrix ERRmat(1,1);
+		return ERRmat;
+	}
+	
 }
 //~UserInput();

@@ -42,7 +42,7 @@ void Matrix::printMat()
 		{
 			str << val[i][j] ;	
 
-			str<< "--";
+			str<< "   ";
 		}
 		str<<"\n";
 	}
