@@ -22,7 +22,7 @@ void UserInput::userDialog_init()
 		std::cin>>n_steps;	
 	}
 
-	h_step = L_length / (float)n_steps;
+	h_step = L_length / (float)(n_steps-1) ;
 	std::cout<<"\nStep size is: "<< h_step <<"\nTime step Tau: ";
 	std::cin>>Tau_step;
 	std::cout<<"\n\nBoundary condition.\nSet A: ";
@@ -34,11 +34,11 @@ void UserInput::userDialog_init()
 
 double UserInput::calculate_f()
 {
-	return (1 / Tau_step) +/*war mal +*/ ((2*a_heat*a_heat)/h_step*h_step);
+	return ((1 / Tau_step) -/*war mal +*/ ((2*a_heat*a_heat)/(h_step*h_step))); //uebeltaeter?
 }
 double UserInput::calculate_g()
 {
-	return -((a_heat*a_heat) / (h_step*h_step));/*war mal -*/
+	return ((a_heat*a_heat) / (h_step*h_step));/*war mal -*/
 }
 Matrix UserInput::calculate_rhs()
 {
@@ -48,8 +48,8 @@ Matrix UserInput::calculate_rhs()
 	{
 		rhs.setElement(i,1, (1/Tau_step)  * ( ((float)i * A_bound)/((float)(n_steps-1)) ) );
 	}
-	double specialvalue = (1/Tau_step)  *  (((n_steps-2)*A_bound)  /  (n_steps-1));
-			specialvalue = specialvalue - calculate_g() * A_bound * cos(omega_bound * Tau_step);
+	double specialvalue = (1/Tau_step)  *     (   (((n_steps-2)*A_bound)  /  (n_steps-1))  -  calculate_g() * A_bound * cos(omega_bound * Tau_step)   );
+			
  	rhs.setElement(n_steps-2,1,   specialvalue);
 
 	return rhs;

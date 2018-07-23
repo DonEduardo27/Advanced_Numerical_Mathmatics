@@ -16,15 +16,15 @@
 int main()
 {
 	std::cout<<"Matrix Solver \n";
-	//UserInput UInp;
+	UserInput UInp;
 	Algorithms algo;
-/*
 	Matrix m = UInp.make_matrix();
 	m.printMat();
 
 	Matrix v = UInp.calculate_rhs();
 	v.printMat();
-*/
+/*
+
 	Matrix m(4,4);
 	m.makeBand3(1,2,3);
 	m.printMat();
@@ -38,14 +38,16 @@ int main()
 	algo.thomas(m,v).printMat();
 	algo.gauss(m,v).printMat();
 	//printSolution(thomas(m,v), UInp)
-/*
+
+*/
+
 	double f = UInp.calculate_f();
 	double g = UInp.calculate_g();
 
 
 
-	thomas(m,v).printMat();		
-*/
+	algo.thomas(m,v).printMat();		
+
 
 
 
