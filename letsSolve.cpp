@@ -21,34 +21,26 @@ int main()
 	Matrix m = UInp.make_matrix();
 	m.printMat();
 
-	Matrix v = UInp.calculate_rhs();
-	v.printMat();
-/*
+	std::cout<<"\n---\n";
 
-	Matrix m(4,4);
-	m.makeBand3(1,2,3);
-	m.printMat();
-
-	Matrix v(4,1);
-	v.setElement(1,1,8);
-	v.setElement(2,1,8);
-	v.setElement(3,1,10);
-	v.setElement(4,1,5);
-	v.printMat();	
-	algo.thomas(m,v).printMat();
-	algo.gauss(m,v).printMat();
-	//printSolution(thomas(m,v), UInp)
-
-*/
 
 	double f = UInp.calculate_f();
 	double g = UInp.calculate_g();
 
+	Matrix solvec(0,0);
 
 
-	algo.thomas(m,v).printMat();		
+	Matrix v = UInp.calculate_rhs(0,m);//initial	
+	for (int i = 1; i <= UInp.getIterations(); ++i)
+	{
+		
+		solvec = algo.thomas(m,v);
+		std::cout<<"Iteration "<<i <<":\n";
+		solvec.printMat();
+		
+		v = UInp.calculate_rhs(i,solvec);
 
-
+	}
 
 
 	std::cout<<std::endl;
