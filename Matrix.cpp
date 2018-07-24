@@ -32,7 +32,7 @@ void Matrix::makeBand3(double left, double middle, double right)//zeros = anzahl
 	}
 }
 
-void Matrix::printMat()
+const void Matrix::printMat()
 {
 	std::stringstream str;
 

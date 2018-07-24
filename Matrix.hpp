@@ -9,7 +9,7 @@ public:
 	Matrix(int n, int m); //Empty
 	void makeBand3(double left, double middle, double right);
 
-	void printMat();
+	const void printMat();
 
 	double getElement(int i, int j);
 	void   setElement(int i, int j, float a);

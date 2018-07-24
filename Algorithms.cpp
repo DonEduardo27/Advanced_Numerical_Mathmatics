@@ -1,11 +1,34 @@
 #include "Algorithms.hpp"
+#include <string>
+
+bool basicCheck(Matrix mat, Matrix vec, std::string algo)
+{
+		if(mat.getDimensionM() != mat.getDimensionN())
+	{
+		std::cout<<"Error in "<<algo<<" algorithm: Only possible square matrices!\n";
+		Matrix m(0,0);
+		return false;
+	}
+	if(vec.getDimensionM() != 1)
+	{
+		std::cout<<"Error in "<<algo<<" algorithm: Left hand side has to be a column vector! (Did you try to transpose?)\n";
+		Matrix m(0,0);
+		return false;		
+	}
+	if(vec.getDimensionN() != mat.getDimensionN())
+	{
+		std::cout<<"Error in "<<algo<<" algorithm: vector- and Matrix dimension have to match (Did you try to transpose?)\n";
+		Matrix m(0,0);
+		return false;		
+	}
+	return true;
+}
 
 Matrix Algorithms::thomas(Matrix mat, Matrix vec)
 {
 	//ERROR Messages
-	if(mat.getDimensionM() != mat.getDimensionN())
+	if(!basicCheck(mat,vec,"Thomas"))
 	{
-		std::cout<<"Error in Thomas algorithm: Only possible square matrices!\n";
 		Matrix m(0,0);
 		return m;
 	}
@@ -15,18 +38,7 @@ Matrix Algorithms::thomas(Matrix mat, Matrix vec)
 		Matrix m(0,0);
 		return m;
 	}
-	if(vec.getDimensionM() != 1)
-	{
-		std::cout<<"Error in Thomas algorithm: Left hand side has to be a column vector! (Did you try to transpose?)\n";
-		Matrix m(0,0);
-		return m;		
-	}
-	if(vec.getDimensionN() != mat.getDimensionN())
-	{
-		std::cout<<"Error in Thomas algorithm: vector- and Matrix dimension have to match (Did you try to transpose?)\n";
-		Matrix m(0,0);
-		return m;		
-	}
+
 	//Actual algorithm
 	//(1)
 	Matrix alpha(vec.getDimensionN()+1,1);
@@ -63,23 +75,10 @@ double abs(double a)
 
 Matrix  Algorithms::gauss(Matrix matInp, Matrix vec)
 {
-	if(matInp.getDimensionM() != matInp.getDimensionN())
+	if(!basicCheck(matInp,vec,"Gauss"))
 	{
-		std::cout<<"Error in Gauss algorithm: Only possible square matrices!\n";
 		Matrix m(0,0);
 		return m;
-	}
-	if(vec.getDimensionM() != 1)
-	{
-		std::cout<<"Error in Gauss algorithm: Left hand side has to be a column vector! (Did you try to transpose?)\n";
-		Matrix m(0,0);
-		return m;		
-	}
-	if(vec.getDimensionN() != matInp.getDimensionN())
-	{
-		std::cout<<"Error in Gauss algorithm: vector- and Matrix dimension have to match (Did you try to transpose?)\n";
-		Matrix m(0,0);
-		return m;		
 	}
 
 	Matrix mat(matInp.getDimensionN(),matInp.getDimensionN()+1);
@@ -132,8 +131,6 @@ Matrix  Algorithms::gauss(Matrix matInp, Matrix vec)
 		}
 	}
 
-mat.printMat();
-
 	Matrix vecSol(matInp.getDimensionN(),1);
 	for (int i = matInp.getDimensionN(); i > 0; i--)
 	{
@@ -147,4 +144,39 @@ mat.printMat();
 	return vecSol;
 }
 
+Matrix Algorithms::fixpoint(Matrix mat, Matrix vec, int iterations)
+{
+	if(!basicCheck(mat,vec, "Fixpoint"))
+	{
+		Matrix m(0,0);
+		return m;
+	}
+	double f = mat.getElement(1,1);
+	double g = mat.getElement(1,2);
+	double norm = 2*(g/f);
+	if(norm < 0)norm = -norm;
+	if(norm > 1)
+	{
+		std::cout<<"Error in Fixpoint algorithm: Won't converge as norm of C is "<<norm<<" > 1!\n";
+		Matrix m(0,0);
+		return m;
+	}
 
+	//Actual Fixpoint algorithm
+
+	Matrix B(mat.getDimensionN(),mat.getDimensionM());
+	B.makeBand3(-(g/f),0,-(g/f));
+
+	Matrix C(mat.getDimensionN(),1);
+	for (int i = 1; i <= mat.getDimensionN(); ++i)
+	{
+		C.setElement(i,1,vec.getElement(1,i)/f);
+	}
+	//u = B u + C
+	for (int i = 0; i < iterations; ++i)
+	{
+		int z;
+		//...Dafür muesste man mal Matrixmultiplikation implementiert haben...
+	}
+
+}

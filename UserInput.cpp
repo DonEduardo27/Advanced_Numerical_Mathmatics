@@ -70,7 +70,7 @@ Matrix UserInput::calculate_rhs(int step, Matrix u)
 			rhs.setElement(i,1,u.getElement(i,1) );
 		}
 
-		double specialvalue = (1/Tau_step)  *       u.getElement(n_steps-2,1) -  calculate_g() * A_bound * cos(omega_bound * Tau_step*(step+1))   ;
+		double specialvalue = (1/Tau_step)  *       u.getElement(n_steps-2,1) -  calculate_g() * A_bound * cos(omega_bound * Tau_step*(step))   ;
 				
 	 	rhs.setElement(n_steps-2,1,   specialvalue); 		
  	}
