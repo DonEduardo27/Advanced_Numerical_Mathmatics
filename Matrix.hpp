@@ -8,7 +8,9 @@ class Matrix
 public:
 	Matrix(int n, int m); //Empty
 	void makeBand3(double left, double middle, double right);
-	Matrix multiply(Matrix matL, Matrix matR);
+	Matrix operator*(Matrix matR);
+	Matrix operator+(Matrix matR);
+
 
 	const void printMat();
 

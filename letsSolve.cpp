@@ -46,9 +46,10 @@ int main()
 	right.setElement(1,3, 1);
 	right.setElement(2,3, 3);
 	right.setElement(3,3, 3);
-	left.multiply(left,right).printMat();
-
+	left = left + right;
+	left.printMat();
 /*
+
 	Matrix m = UInp.make_matrix();
 	m.printMat();
 

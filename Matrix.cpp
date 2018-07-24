@@ -31,8 +31,9 @@ void Matrix::makeBand3(double left, double middle, double right)//zeros = anzahl
 		val[i][i-1] = left;
 	}
 }
-Matrix Matrix::multiply(Matrix matL, Matrix matR)
+Matrix Matrix::operator*(Matrix matR)
 {
+	Matrix matL = *this;
 	if(matL.getDimensionM() != matR.getDimensionN())
 	{
 		std::cout<<"To do a Matrix multiplication Dimensions have to match. (Now: left has "<<matL.getDimensionM()<< " colums and right has "<<matR.getDimensionN()<<" rows)\n";
@@ -54,6 +55,27 @@ Matrix Matrix::multiply(Matrix matL, Matrix matR)
 				std::cout<<" rowLeft: "<<rowLeft<<" colRight: "<<colRight<<" sum: "<<sum<<"\n";
 			}
 			res.setElement(rowLeft,colRight,sum);
+		}
+	}
+	return res;
+}
+Matrix Matrix::operator+(Matrix matR)
+{
+	Matrix matL = *this;
+	if(matL.getDimensionN() != matR.getDimensionN() or matL.getDimensionM() != matR.getDimensionM())
+	{
+		std::cout<<"To do a Matrix addition Dimensions have to be equal. (Now: left has "<<matL.getDimensionM()<< " colums and right has "<<matR.getDimensionM()<<" colums,\nleft has "<<matL.getDimensionN()<< " rows and right has "<<matR.getDimensionN()<<" rows)\n";
+		Matrix m(0,0);
+		return m;
+	}	
+	Matrix res( matR.getDimensionN(), matR.getDimensionM());
+	for (int j = 1; j <= matR.getDimensionM(); ++j)
+	{
+	std::cout<<"hohoho\n";
+		for (int i = 1; i <= matR.getDimensionN(); ++i)
+		{
+			double sum = matR.getElement(j,i) + matL.getElement(j,i);
+			res.setElement(j,i,sum);		
 		}
 	}
 	return res;
