@@ -52,7 +52,6 @@ Matrix Matrix::operator*(Matrix matR)
 			for (int cumulated = 1; cumulated <= matR.getDimensionN(); ++cumulated)
 			{
 				sum += matL.getElement(rowLeft, cumulated) * matR.getElement(cumulated, colRight);
-				std::cout<<" rowLeft: "<<rowLeft<<" colRight: "<<colRight<<" sum: "<<sum<<"\n";
 			}
 			res.setElement(rowLeft,colRight,sum);
 		}
@@ -69,10 +68,9 @@ Matrix Matrix::operator+(Matrix matR)
 		return m;
 	}	
 	Matrix res( matR.getDimensionN(), matR.getDimensionM());
-	for (int j = 1; j <= matR.getDimensionM(); ++j)
+	for (int j = 1; j <= matR.getDimensionN(); ++j)
 	{
-	std::cout<<"hohoho\n";
-		for (int i = 1; i <= matR.getDimensionN(); ++i)
+		for (int i = 1; i <= matR.getDimensionM(); ++i)
 		{
 			double sum = matR.getElement(j,i) + matL.getElement(j,i);
 			res.setElement(j,i,sum);		

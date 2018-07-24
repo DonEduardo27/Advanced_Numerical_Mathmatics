@@ -146,14 +146,12 @@ Matrix  Algorithms::gauss(Matrix matInp, Matrix vec)
 
 Matrix Algorithms::fixpoint(Matrix mat, Matrix vec, int iterations)
 {
-std::cout<<"Test\n";
-	
+
 	if(!basicCheck(mat,vec, "Fixpoint"))
 	{
 		Matrix m(0,0);
 		return m;
 	}
-std::cout<<"Test\n";
 
 	double f = mat.getElement(1,1);
 	double g = mat.getElement(1,2);
@@ -165,22 +163,30 @@ std::cout<<"Test\n";
 		Matrix m(0,0);
 		return m;
 	}
-std::cout<<"Test\n";
 	//Actual Fixpoint algorithm
 
 	Matrix B(mat.getDimensionN(),mat.getDimensionM());
 	B.makeBand3(-(g/f),0,-(g/f));
 
+	int a;
+
 	Matrix C(mat.getDimensionN(),1);
 	for (int i = 1; i <= mat.getDimensionN(); ++i)
 	{
-		C.setElement(i,1,vec.getElement(1,i)/f);
+		C.setElement(i,1,vec.getElement(i,1)/f);
 	}
 	//u = B u + C
+	
+
 	for (int i = 0; i < iterations; ++i)
 	{
-		int z;
-		//...Dafür muesste man mal Matrixmultiplikation implementiert haben...
+		vec = (B * vec );
+		/*std::cout<<"vec "<<i<<"\n";
+		vec.printMat();
+		std::cout<<"B "<<i<<"\n";
+		C.printMat();*/
+		vec = vec + C;
 	}
+	return vec;
 
 }

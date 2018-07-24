@@ -5,7 +5,7 @@ class UserInput
 public:
 	UserInput();
 
-	void userDialog_init();
+	void userDialog_init(bool user);
 
 	double calculate_f();
 	double calculate_g();

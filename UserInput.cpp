@@ -4,38 +4,53 @@
 
 UserInput::UserInput()
 {
-	userDialog_init();
+	userDialog_init(0);
 }
 
-void UserInput::userDialog_init()
+void UserInput::userDialog_init(bool user)
 {
-	double tTotal = 0;
-	std::cout<<"Initializing Values. \nValue a of heat equation: ";
-	std::cin>>a_heat;
-	std::cout<<"\n\nSetting parameters.\nLength of rod: ";
-	std::cin>>L_length;
-	std::cout<<"\nNumber of measuring points n: ";
-	
-	std::cin>>n_steps;
-	while (n_steps < 1)
+	if(user)
 	{
-		std::cout<<"n has to be greater than 0\n";
-		std::cin>>n_steps;	
-	}
+		double tTotal = 0;
+		std::cout<<"Initializing Values. \nValue a of heat equation: ";
+		std::cin>>a_heat;
+		std::cout<<"\n\nSetting parameters.\nLength of rod: ";
+		std::cin>>L_length;
+		std::cout<<"\nNumber of measuring points n: ";
+		
+		std::cin>>n_steps;
+		while (n_steps < 1)
+		{
+			std::cout<<"n has to be greater than 0\n";
+			std::cin>>n_steps;	
+		}
 
-	h_step = L_length / (float)(n_steps-1) ;
-	std::cout<<"\nStep size is: "<< h_step <<"\nTotal Time: ";
-	std::cin>>tTotal;
-	std::cout<<"Number of discrete timesteps:";
-	std::cin>>noTimeSteps;
-	Tau_step = tTotal / (float)noTimeSteps;
-	std::cout<<"Tau = "<<Tau_step;
-	std::cout<<"\n\nBoundary condition.\nSet A: ";
-	std::cin>>A_bound;
-	std::cout<<"\nThanks. Set omega: ";
-	std::cin>>omega_bound;
-	std::cout<<"\n\n\nComplete.\n\n\n";
+		h_step = L_length / (float)(n_steps-1) ;
+		std::cout<<"\nStep size is: "<< h_step <<"\nTotal Time: ";
+		std::cin>>tTotal;
+		std::cout<<"Number of discrete timesteps:";
+		std::cin>>noTimeSteps;
+		Tau_step = tTotal / (float)noTimeSteps;
+		std::cout<<"Tau = "<<Tau_step;
+		std::cout<<"\n\nBoundary condition.\nSet A: ";
+		std::cin>>A_bound;
+		std::cout<<"\nThanks. Set omega: ";
+		std::cin>>omega_bound;
+		std::cout<<"\n\n\nComplete.\n\n\n";
+	}
+	else
+	{
+		a_heat = 1;
+		L_length = 20;
+		n_steps = 10;
+		h_step = L_length / (float)(n_steps-1) ;
+		noTimeSteps = 10;
+		Tau_step = 0.1;
+		A_bound = 1;
+		omega_bound =1;
+	}
 }
+
 
 double UserInput::calculate_f()
 {
