@@ -146,11 +146,15 @@ Matrix  Algorithms::gauss(Matrix matInp, Matrix vec)
 
 Matrix Algorithms::fixpoint(Matrix mat, Matrix vec, int iterations)
 {
+std::cout<<"Test\n";
+	
 	if(!basicCheck(mat,vec, "Fixpoint"))
 	{
 		Matrix m(0,0);
 		return m;
 	}
+std::cout<<"Test\n";
+
 	double f = mat.getElement(1,1);
 	double g = mat.getElement(1,2);
 	double norm = 2*(g/f);
@@ -161,7 +165,7 @@ Matrix Algorithms::fixpoint(Matrix mat, Matrix vec, int iterations)
 		Matrix m(0,0);
 		return m;
 	}
-
+std::cout<<"Test\n";
 	//Actual Fixpoint algorithm
 
 	Matrix B(mat.getDimensionN(),mat.getDimensionM());

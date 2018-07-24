@@ -31,6 +31,33 @@ void Matrix::makeBand3(double left, double middle, double right)//zeros = anzahl
 		val[i][i-1] = left;
 	}
 }
+Matrix Matrix::multiply(Matrix matL, Matrix matR)
+{
+	if(matL.getDimensionM() != matR.getDimensionN())
+	{
+		std::cout<<"To do a Matrix multiplication Dimensions have to match. (Now: left has "<<matL.getDimensionM()<< " colums and right has "<<matR.getDimensionN()<<" rows)\n";
+		Matrix m(0,0);
+		return m;
+	}
+
+	Matrix res(matL.getDimensionN(),matR.getDimensionM());
+
+
+	for (int rowLeft = 1; rowLeft <= matL.getDimensionN(); ++rowLeft)
+	{
+		for (int colRight = 1; colRight <= matR.getDimensionM(); ++colRight)
+		{
+			double sum = 0;
+			for (int cumulated = 1; cumulated <= matR.getDimensionN(); ++cumulated)
+			{
+				sum += matL.getElement(rowLeft, cumulated) * matR.getElement(cumulated, colRight);
+				std::cout<<" rowLeft: "<<rowLeft<<" colRight: "<<colRight<<" sum: "<<sum<<"\n";
+			}
+			res.setElement(rowLeft,colRight,sum);
+		}
+	}
+	return res;
+}
 
 const void Matrix::printMat()
 {
