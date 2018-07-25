@@ -1,5 +1,6 @@
 #include "Algorithms.hpp"
 #include <string>
+#include <math.h>
 
 bool basicCheck(Matrix mat, Matrix vec, std::string algo)
 {
@@ -181,12 +182,88 @@ Matrix Algorithms::fixpoint(Matrix mat, Matrix vec, int iterations)
 	for (int i = 0; i < iterations; ++i)
 	{
 		vec = (B * vec );
-		/*std::cout<<"vec "<<i<<"\n";
-		vec.printMat();
-		std::cout<<"B "<<i<<"\n";
-		C.printMat();*/
 		vec = vec + C;
 	}
 	return vec;
 
+}
+Matrix Algorithms::singleStep(Matrix mat, Matrix vec, int iterations)
+{
+	if(!basicCheck(mat,vec, "Single Step"))
+	{
+		Matrix m(0,0);
+		return m;
+	}
+
+	double f = mat.getElement(1,1);
+	double g = mat.getElement(1,2);
+	double norm = 2*(g/f);
+	if(norm < 0)norm = -norm;
+	if(norm > 1)
+	{
+		std::cout<<"Error in Single Step method: Won't converge as norm of C is "<<norm<<" > 1!\n";
+		Matrix m(0,0);
+		return m;
+	}
+	//Actual SS algorithm
+
+	//D
+	Matrix D(mat.getDimensionN(),mat.getDimensionM());
+	Matrix L(mat.getDimensionN(),mat.getDimensionM());
+	Matrix R(mat.getDimensionN(),mat.getDimensionM());
+
+	for (int i = 1; i <= mat.getDimensionN(); ++i)
+	{
+		D.setElement(i,i, mat.getElement(i,i));
+		R.setElement(i,i, 0);
+		L.setElement(i,i, 0);
+	}
+	//L und R
+
+
+	for (int i = 1; i <= mat.getDimensionN()-1; ++i)
+	{
+		for (int j = i+1; j <= mat.getDimensionN(); ++j)
+		{
+			R.setElement(i,j, mat.getElement(i,j));
+			L.setElement(mat.getDimensionN()-(i-1),mat.getDimensionN()-(j-1),mat.getElement(i,j));
+		}
+	}
+	D.printMat();
+	L.printMat();
+	R.printMat();
+	//(d+l) invertieren
+	Matrix DLInverse(mat.getDimensionN(),mat.getDimensionM());
+	double d = D.getElement(1,1);
+	double l = L.getElement(2,1); 
+	for (int i = 1; i <= mat.getDimensionN(); ++i)
+	{
+		double diagonalval = (pow(l,i-1) / pow(d,i)) * pow(-1,i-1);
+		for (int j = 1; j <= mat.getDimensionN()-(i-1); ++j)
+		{
+			DLInverse.setElement(j+(i-1),j, diagonalval);
+		}
+	}
+	Matrix test = (D + L)*DLInverse;
+	test.printMat();
+
+	/*Matrix B(mat.getDimensionN(),mat.getDimensionM());
+	B.makeBand3(-(g/f),0,-(g/f));
+
+	int a;
+
+	Matrix C(mat.getDimensionN(),1);
+	for (int i = 1; i <= mat.getDimensionN(); ++i)
+	{
+		C.setElement(i,1,vec.getElement(i,1)/f);
+	}
+	//u = B u + C
+	
+
+	for (int i = 0; i < iterations; ++i)
+	{
+		vec = (B * vec );
+		vec = vec + C;
+	}*/
+	return vec;
 }

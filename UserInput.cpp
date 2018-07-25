@@ -42,7 +42,7 @@ void UserInput::userDialog_init(bool user)
 	{
 		a_heat = 12;
 		L_length = 10;
-		n_steps = 20;
+		n_steps = 10;
 		h_step = L_length / (float)(n_steps-1) ;
 		noTimeSteps = 2;
 		Tau_step = 0.0001;

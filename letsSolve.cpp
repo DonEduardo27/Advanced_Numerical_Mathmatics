@@ -63,22 +63,15 @@ int main()
 	Matrix v = UInp.calculate_rhs(0,solvec);//initial - Thomas
 	Matrix v2= UInp.calculate_rhs(0,solfix);//initial - Fixpoint
 	Matrix v3= UInp.calculate_rhs(0,solgau);//initial - Gauss
-	std::cout<<"V DEBUG init\n";
-	v.printMat();
 
 	std::cout<<"\n Using Chase Method:\n";
 	for (int i = 1; i <= UInp.getIterations(); ++i)
 	{
 		solvec = algo.thomas(m,v);
-		std::cout<<"solvec DEBUG\n"<<i<<"\n";
-		solvec.printMat();
-		
 		v = UInp.calculate_rhs(i+1,solvec);
-		std::cout<<"V DEBUG\n"<<i<<"\n";
-		v.printMat();
 	}
 	solvec.printMat();
-	/*
+	
 	std::cout<<"\n Using Fixpoint Iteration:\n";
 	for (int i = 0; i < UInp.getIterations(); ++i)
 	{
@@ -94,9 +87,8 @@ int main()
 		v3= UInp.calculate_rhs(i+1,solgau);
 	}
 	solgau.printMat();
-*/
 
-
+	algo.singleStep(m,v,1);
 
 	std::cout<<std::endl;
 	return 0;
