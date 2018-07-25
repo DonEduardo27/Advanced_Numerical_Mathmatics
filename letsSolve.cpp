@@ -60,9 +60,11 @@ int main()
 	Matrix solvec(0,0);
 	Matrix solfix(0,0);
 	Matrix solgau(0,0);
+	Matrix solsig(0,0);
 	Matrix v = UInp.calculate_rhs(0,solvec);//initial - Thomas
 	Matrix v2= UInp.calculate_rhs(0,solfix);//initial - Fixpoint
 	Matrix v3= UInp.calculate_rhs(0,solgau);//initial - Gauss
+	Matrix v4= UInp.calculate_rhs(0,solsig);//initial - S.Step
 
 	std::cout<<"\n Using Chase Method:\n";
 	for (int i = 1; i <= UInp.getIterations(); ++i)
@@ -88,7 +90,16 @@ int main()
 	}
 	solgau.printMat();
 
-	algo.singleStep(m,v,1);
+	std::cout<<"\n Using Single step Iteration:\n";
+	for (int i = 0; i < UInp.getIterations(); ++i)
+	{
+		solsig = algo.singleStep(m,v4,10);
+		if(solsig.getDimensionM() == 0)break;//S.Step scheitert
+		v3= UInp.calculate_rhs(i+1,solsig);
+	}
+	solsig.printMat();
+
+	
 
 	std::cout<<std::endl;
 	return 0;

@@ -229,9 +229,6 @@ Matrix Algorithms::singleStep(Matrix mat, Matrix vec, int iterations)
 			L.setElement(mat.getDimensionN()-(i-1),mat.getDimensionN()-(j-1),mat.getElement(i,j));
 		}
 	}
-	D.printMat();
-	L.printMat();
-	R.printMat();
 	//(d+l) invertieren
 	Matrix DLInverse(mat.getDimensionN(),mat.getDimensionM());
 	double d = D.getElement(1,1);
@@ -244,26 +241,28 @@ Matrix Algorithms::singleStep(Matrix mat, Matrix vec, int iterations)
 			DLInverse.setElement(j+(i-1),j, diagonalval);
 		}
 	}
-	Matrix test = (D + L)*DLInverse;
-	test.printMat();
+	//Matrix test = (D + L)*DLInverse;
+	//test.printMat();
 
-	/*Matrix B(mat.getDimensionN(),mat.getDimensionM());
-	B.makeBand3(-(g/f),0,-(g/f));
+	//B und C ausrechnen
+	//Anders als im Skript, konsistent zu Fix.method
 
-	int a;
-
-	Matrix C(mat.getDimensionN(),1);
-	for (int i = 1; i <= mat.getDimensionN(); ++i)
+	Matrix C = DLInverse * vec;
+	//Für B muss DLInverse negiert werden.
+	for (int i = 1; i <= DLInverse.getDimensionN(); ++i)
 	{
-		C.setElement(i,1,vec.getElement(i,1)/f);
-	}
-	//u = B u + C
-	
+		for (int j = 1; j <= DLInverse.getDimensionM(); ++j)
+		{
+			DLInverse.setElement(i,j,(-1) * DLInverse.getElement(i,j));
+		}
+	}		
+	Matrix B = DLInverse * R;
 
+	//u = B u + C
 	for (int i = 0; i < iterations; ++i)
 	{
 		vec = (B * vec );
 		vec = vec + C;
-	}*/
+	}
 	return vec;
 }
