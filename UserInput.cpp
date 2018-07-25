@@ -40,12 +40,12 @@ void UserInput::userDialog_init(bool user)
 	}
 	else
 	{
-		a_heat = 1;
-		L_length = 20;
-		n_steps = 10;
+		a_heat = 12;
+		L_length = 10;
+		n_steps = 20;
 		h_step = L_length / (float)(n_steps-1) ;
-		noTimeSteps = 10;
-		Tau_step = 0.1;
+		noTimeSteps = 2;
+		Tau_step = 0.0001;
 		A_bound = 1;
 		omega_bound =1;
 	}
@@ -82,10 +82,10 @@ Matrix UserInput::calculate_rhs(int step, Matrix u)
  	{
 		for (int i = 1; i < n_steps-2; ++i)
 		{
-			rhs.setElement(i,1,u.getElement(i,1) );
+			rhs.setElement(i,1,(1/Tau_step)  *u.getElement(i,1) );
 		}
 
-		double specialvalue = (1/Tau_step)  *       u.getElement(n_steps-2,1) -  calculate_g() * A_bound * cos(omega_bound * Tau_step*(step))   ;
+		double specialvalue = (1/Tau_step)  * u.getElement(n_steps-2,1) -  calculate_g() * A_bound * cos(omega_bound * Tau_step*(float)(step))   ;
 				
 	 	rhs.setElement(n_steps-2,1,   specialvalue); 		
  	}
