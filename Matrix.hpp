@@ -15,7 +15,7 @@ public:
 	const void printMat();
 
 	double getElement(int i, int j);
-	void   setElement(int i, int j, float a);
+	void   setElement(int i, int j, double a);
 	int getDimensionN();
 	int getDimensionM();
 	bool checkIfBand3();

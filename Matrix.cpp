@@ -101,7 +101,7 @@ double Matrix::getElement(int i, int j)
 {
 	return val[i-1][j-1];
 }
-void   Matrix::setElement(int i, int j, float a)
+void   Matrix::setElement(int i, int j, double a)
 {
 	val[i-1][j-1] = a;
 }
