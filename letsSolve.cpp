@@ -13,14 +13,11 @@ int main()
 {
 	std::cout<<"Matrix Solver \n";
 
-	UserInput UInp;
-	Algorithms algo;
+	UserInput UInp;	//Klasse, die Inpit entgegennimmt und Objekte direkt daraus berechnet
+	Algorithms algo;//Klasse, die die vier Algorithmen bereitstellt
 
-	Matrix m = UInp.make_matrix();
+	Matrix m = UInp.make_matrix();	//Aus dem Input wird die Matrix berechnet
 	m.printMat();
-
-	double f = UInp.calculate_f();
-	double g = UInp.calculate_g();
 
 	Matrix solvec(0,0);
 	Matrix solfix(0,0);

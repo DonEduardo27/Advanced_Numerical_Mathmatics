@@ -70,16 +70,6 @@ void UserInput::userDialog_init(bool user)
 		std::cin>>omega_bound;
 		std::cout<<"\n\n\nComplete.\n\n\n";
 
-		std::cout<< L_length<<"\n";
-		std::cout<< Tau_step<<"\n";
-		std::cout<< h_step<<"\n";
-		std::cout<< n_steps<<"\n";
-		std::cout<< noTimeSteps<<"\n";
-		std::cout<< A_bound<<"\n";
-		std::cout<< omega_bound<<"\n";
-		std::cout<< f_Matrix<<"\n";
-		std::cout<< g_Matrix<<"\n";
-
 	}
 	else
 	{
