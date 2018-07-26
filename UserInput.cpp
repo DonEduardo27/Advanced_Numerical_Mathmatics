@@ -73,6 +73,7 @@ void UserInput::userDialog_init(bool user)
 	}
 	else
 	{
+		//Default values
 		a_heat = 12;
 		L_length = 10;
 		n_steps = 20;
@@ -87,20 +88,21 @@ void UserInput::userDialog_init(bool user)
 
 double UserInput::calculate_f()
 {
-	return ((1 / Tau_step) -/*war mal +*/ ((2*a_heat*a_heat)/(h_step*h_step))); //uebeltaeter?
+	return ((1 / Tau_step) - ((2*a_heat*a_heat)/(h_step*h_step)));
 }
 double UserInput::calculate_g()
 {
-	return ((a_heat*a_heat) / (h_step*h_step));/*war mal -*/
+	return ((a_heat*a_heat) / (h_step*h_step));
 }
 int UserInput::getIterations()
 {
 	return noTimeSteps;
 }
+//U_j-1 jeweils, endweder von den initioal conditions oder verhergehend berechnete werte
 Matrix UserInput::calculate_rhs(int step, Matrix u)
 {
 
-	Matrix rhs(n_steps-2,1);//1, 2, 3, ..., n-2, x
+	Matrix rhs(n_steps-2,1);
 	if(step == 0)
 	{
 		for (int i = 1; i < n_steps-2; ++i)
@@ -139,4 +141,3 @@ Matrix UserInput::make_matrix()
 	}
 	
 }
-//~UserInput();

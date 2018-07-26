@@ -4,7 +4,7 @@
 
 bool basicCheck(Matrix mat, Matrix vec, std::string algo)
 {
-		if(mat.getDimensionM() != mat.getDimensionN())
+	if(mat.getDimensionM() != mat.getDimensionN())
 	{
 		std::cout<<"Error in "<<algo<<" algorithm: Only possible square matrices!\n";
 		Matrix m(0,0);
@@ -41,12 +41,12 @@ Matrix Algorithms::thomas(Matrix mat, Matrix vec)
 	}
 
 	//Actual algorithm
-	//(1)
+
 	Matrix alpha(vec.getDimensionN()+1,1);
 	Matrix beta (vec.getDimensionN()+1,1);
 	alpha.setElement(1,1,0);
 	beta.setElement(1,1,0);
-	//(2)
+
 	for (int i = 1; i <= vec.getDimensionN(); ++i)
 	{
 		double alphajplus1 = ((-1) * mat.getElement(i,i+1)) /
@@ -56,10 +56,10 @@ Matrix Algorithms::thomas(Matrix mat, Matrix vec)
 		alpha.setElement(i+1,1,alphajplus1);
 		 beta.setElement(i+1,1,betajplus1);
 	}
-	//(3)
+
 	Matrix solVec (vec.getDimensionN(),1);
 	solVec.setElement(vec.getDimensionN(),1, beta.getElement(vec.getDimensionN()+1,1));
-	//(4)
+
 	for (int i = vec.getDimensionN() - 1; i > 0; i--)
 	{
 		solVec.setElement(i,1, alpha.getElement(i+1,1) * solVec.getElement(i+1,1) + beta.getElement(i+1,1));
@@ -245,7 +245,7 @@ Matrix Algorithms::singleStep(Matrix mat, Matrix vec, int iterations)
 	//test.printMat();
 
 	//B und C ausrechnen
-	//Anders als im Skript, konsistent zu Fix.method
+	//Benennung anders als im Skript, konsistent zu Fix.method
 
 	Matrix C = DLInverse * vec;
 	//Für B muss DLInverse negiert werden.

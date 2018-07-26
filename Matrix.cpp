@@ -5,7 +5,7 @@
 #include <sstream>
 
 
-Matrix::Matrix(int n, int m): dimN(n),dimM(m) //Empty
+Matrix::Matrix(int n, int m): dimN(n),dimM(m) //Unity atrix
 {
 	val.resize(n,std::vector<double>(m));
 	for (int i = 0; i < dimN; ++i)
@@ -20,8 +20,7 @@ Matrix::Matrix(int n, int m): dimN(n),dimM(m) //Empty
 	}
 
 }
-
-void Matrix::makeBand3(double left, double middle, double right)//zeros = anzahl der 0en in der ersten zeile bevor wert left kommt
+void Matrix::makeBand3(double left, double middle, double right)
 {
 	val[0][0] = middle;
 	for (int i =1; i < dimN; ++i)
@@ -121,7 +120,7 @@ bool Matrix::checkIfBand3()
 		{
 			if(i - j > 1 or j - i > 1)
 			{
-				if(val[i][j] > 0.001)return false;
+				if(val[i][j] > 0.001)return false;//Quick and dirty. Besser wäre den Wert adaptiv zu machen
 			}	
 		}
 	}
